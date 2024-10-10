@@ -1,16 +1,24 @@
 ---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import FeaturedArticle from "../components/FeaturedArticle.astro";
+import LatestArticles from "../components/LatestArticles.astro";
+import OtherArticles from "../components/OtherArticles.astro";
 
+import "@fontsource/poppins/200.css";
+import "@fontsource/poppins/400.css";
+import "@fontsource/poppins/400-italic.css";
+import "@fontsource/poppins/600.css";
+import "@fontsource/poppins/700.css";
+import "@fontsource/poppins/900.css";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+
+<BaseLayout pageTitle="Escuela de P.I.T: Blog">
+	<h1 class="mb-4 text-6xl text-text1 text-center lg:text-left">Articulos</h1>
+	<div class="grid gap-4 lg:grid-cols-3 lg:gap-8">
+		<FeaturedArticle />
+		<LatestArticles />
+		<h2 class="text-3xl text-text1 text-center mt-16 lg:col-span-3 lg:text-start">Te Puede llegar a gustar</h2>
+		<OtherArticles />
+	</div>
+</BaseLayout>
