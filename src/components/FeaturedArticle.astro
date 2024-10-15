@@ -1,15 +1,30 @@
+---
+import { loadQuery } from "../sanity/lib/load-query.ts";
+
+const { data: article } = await loadQuery<{title: string; mainImage: {alt: string, asset: {url: string}}; slug: {current: string}}>({
+    query: `*[_type == "post"] | order(_createdAt desc){
+        title,
+        "mainImage": mainImage{
+            alt,
+            asset->{
+                url
+            }
+        },
+        slug 
+    } [0]`
+})
+---
+
 <h2 class="sr-only">Articulo principal</h2>
 <article class="grid gap-2  lg:grid-cols-2 lg:col-span-2">
-    <picture class="lg:col-span-2">
-        <source class="w-full object-cover" srcset="./mainarticle-desktop.png" media="(min-width: 1024px)"/>
-
-        <img class="w-full object-cover" src="./mainarticle-mobile.png" alt=" "/>
-    </picture>
-
-    <h3 class="text-4xl text-text1 font-bold lg:text-left">Volver a sonreir otra vez.</h3>
-
-    <div class="flex flex-col items-center gap-4 lg:items-start lg:gap:2">
-        <p class="text-text1/75">En nuestro ultimo estudio, durante 6 meses seguimos las vidas de 10 pacientes durante y despues de recibir P.I.T, concluyendo en que su calidad de vida mejoro un 70% </p>
-        <a href="#" class="px-4 py-2 text-text2 font-semibold bg-lightBlue1 rounded">READ MORE <span class="sr-only">about (this dynamic content)</span></a>
+    <a class="lg:col-span-2" href=`/post/${article.slug.current}`>
+        <picture >
+            <img class="w-full object-cover object-top max-h-[320px]" src={article.mainImage.asset.url} alt={article.mainImage.alt}/>
+        </picture>
+    </a>
+    <a href=`/post/${article.slug.current}`><h3 class="text-4xl text-text1 font-bold lg:text-left">{article.title}</h3></a>
+    <div class="flex flex-col items-center gap-4 lg:items-start lg:gap:4">
+        <p class="text-text1/75">No se ha proveido ninguna descripción.</p>
+        <a href=`/post/${article.slug.current}`  class="px-4 py-2 text-text2 font-semibold bg-lightBlue1 rounded">LEER MÁS<span class="sr-only">sobre {article.title}</span></a>
     </div>
 </article>

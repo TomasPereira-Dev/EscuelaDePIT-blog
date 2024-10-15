@@ -1,24 +1,25 @@
-<article>
-    <h2 class="text-2xl text-text1">Lo Ultimo</h2>
-    
-    <ul  class="divide-y divide-text1">
-        <li>
-            <article class="py-2">
-                <h3 class="text-xl text-text1 font-semibold">Nuevos hallazgos junto a la U.B.A</h3>
-                <p class="text-text1/75">lorem ipsum dolor</p>
-            </article>
-        </li>
-        <li>
-            <article class="py-2">
-                <h3 class="text-xl text-text1 font-semibold">Nuevos hallazgos junto a la U.B.A 2</h3>
-                <p class="text-text1/75">lorem ipsum dolor</p>
-            </article>
-        </li>
-        <li>
-            <article class="py-2">
-                <h3 class="text-xl text-text1 font-semibold">Nuevos hallazgos junto a la U.B.A 3</h3>
-                <p class="text-text1/75">lorem ipsum dolor</p>
-            </article>
-        </li>
+---
+import { loadQuery } from "../sanity/lib/load-query.ts";
+
+const { data: articles } = await loadQuery<{ title: string; slug: {current: string}}>({
+    query: `*[_type == "post"] | order(_createdAt desc) {
+        title,
+        slug
+    } [1...4]`
+});
+
+
+console.log(articles)
+---
+
+<article class="px-4 py-6 bg-grayishBlue1">
+    <h2 class="mb-4 text-3xl text-text2 font-bold">Lo último</h2>
+    <ul  class="flex flex-col gap-4 h-full">
+        {articles.map((article) => <li class="">
+                                        <article class="py-2">
+                                            <a href=`/post/${article.slug.current}`><h3 class="text-xl text-text2 font-semibold">{article.title}</h3></a>
+                                            <p class="text-text2/75">No se ha proveido nunguna descripción</p>
+                                        </article>
+                                    </li>)}
     </ul>
 </article>

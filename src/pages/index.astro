@@ -2,7 +2,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import FeaturedArticle from "../components/FeaturedArticle.astro";
 import LatestArticles from "../components/LatestArticles.astro";
-import OtherArticles from "../components/OtherArticles.astro";
+import SuggestedArticles from "../components/SuggestedArticles.astro";
 
 import "@fontsource/poppins/200.css";
 import "@fontsource/poppins/400.css";
@@ -18,7 +18,6 @@ import "@fontsource/poppins/900.css";
 	<div class="grid gap-4 lg:grid-cols-3 lg:gap-8">
 		<FeaturedArticle />
 		<LatestArticles />
-		<h2 class="text-3xl text-text1 text-center mt-16 lg:col-span-3 lg:text-start">Te Puede llegar a gustar</h2>
-		<OtherArticles />
+		<SuggestedArticles sectionTitle = {"Te Puede llegar a gustar"} classes={"lg:text-start"}/>
 	</div>
 </BaseLayout>

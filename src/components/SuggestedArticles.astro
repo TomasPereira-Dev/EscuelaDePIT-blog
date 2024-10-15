@@ -1,29 +1,28 @@
 ---
 import { loadQuery } from "../sanity/lib/load-query.ts";
 
-const { data: articles } = await loadQuery<{_createdAt: string; _id: string; title: string; mainImage: {alt: string, asset: {url: string}}}>({
+const { data: articles } = await loadQuery<{title: string; mainImage: {alt: string, asset: {url: string}}; slug: {current: string}}>({
     query: `*[_type == "post"] | order(_createdAt desc) {
-        _createdAt,
-        _id,
         title,
         "mainImage": mainImage{
             alt,
             asset->{
                 url
             }
-        } 
-
+        },
+        slug 
     } [0...3]`
 });
 
-console.log(articles);
-
+const { sectionTitle, classes } = Astro.props;
 ---
-    
-<ul class="grid grid-flow-col gap-6">
+<h2 class=`text-3xl text-text1 text-center mt-16 lg:col-span-3 ${classes}`>{sectionTitle}</h2> 
+<ul class="grid gap-4 lg:grid-flow-col lg:col-span-3 lg:gap-8">
     {articles.map((article) => <li class="space-y-2">
-                                    <img class="block w-full object-fill h-[320px] max-h-[320px] " src={article.mainImage.asset.url} src={article.mainImage.alt}/>
-                                    <h3 class="text-xl text-text1 font-bold">{article.title}</h3>                                    
+                                    <article>
+                                        <img class="block w-full object-fill h-[320px] max-h-[320px] " src={article.mainImage.asset.url} src={article.mainImage.alt}/>
+                                        <a  href=`/post/${article.slug.current}`><h3 class="text-xl text-text1 font-bold">{article.title}</h3></a>
+                                    </article>                                    
                                 </li>)}
 </ul>
 
