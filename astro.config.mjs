@@ -20,6 +20,7 @@ export default defineConfig({
       stega: {
         studioUrl: "/studio",
       },
+      output: "static"
     })
   ]
 });
