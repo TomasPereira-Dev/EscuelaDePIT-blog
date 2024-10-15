@@ -3,6 +3,7 @@ import type { SanityDocument } from "@sanity/client";
 import { loadQuery } from "../../sanity/lib/load-query.ts";
 import PortableText from "../../components/PortableText.astro";
 import Layout from "../../layouts/Layout.astro";
+import SuggestedArticles from "../../components/SuggestedArticles.astro";
 
 export async function getStaticPaths() {
   const { data: posts } = await loadQuery<SanityDocument[]>({
@@ -20,12 +21,81 @@ export async function getStaticPaths() {
 
 const { params } = Astro;
 
-const { data: post } = await loadQuery<{ title: string; body: any[] }>({
-  query: `*[_type == "post" && slug.current == $slug][0]`,
+const { data: post } = await loadQuery<{author: {name: string, image: {asset: {url: string}}, alt: string}; publishedAt: string; title: string; body: any[]; mainImage: {asset: {url:string}, alt: string}}>({
+  query: `*[_type == "post" && slug.current == $slug][0]{
+    author ->{
+      name,
+      image{
+        asset->{
+        url
+      },
+      alt
+      }
+    },
+    publishedAt,
+    title,
+    body,
+    "mainImage": mainImage{
+      alt,
+      asset->{
+        url
+      }
+    }
+  }`,
   params,
 });
+
+const date = new Date(post.publishedAt).toLocaleString("es-AR");
+
 ---
+<!-- SE HIZO GLOBAL PORQUE NO SE PUDO ESTILIZAR COMO INDICA LA DOCUMENTACION DE SANITY, ES UN ULTIMO RECURSO -->
+<style is:global> 
+  .article-text > h2, h3, p {
+    color:hsl(196, 45%, 10%);
+  }
+
+  .article-text > h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+
+  .article-text > h3 {
+    font-size: 1.125rem;
+    font-weight: bold;
+  }
+
+  .article-text > ul {
+    margin: 1rem 0 1rem 2rem;
+    list-style-type: disc;
+  }
+</style>
+
 <Layout>
-    <h1>A post about {post.title}</h1>
-    <PortableText portableText={post.body} />
+  <main class="flex flex-col items-center p-4">
+    <article class="flex flex-col gap-4 max-w-3xl">
+      <h1 class="my-4 text-4xl text-text1 font-bold">{post.title}</h1>
+      <div class="flex gap-2 items-center">
+        <img class="w-12 h-12 max-w-12 rounded-full" src={post.author.image.asset.url} alt={post.author.alt} />
+        <div class="flex flex-col">
+          <span class="text-text1/85">{post.author.name}</span>
+          <span class="text-sm text-text1/85">Publicado el {date.slice(0, 10)}</span>
+        </div>
+
+      </div>
+      <picture>
+        <img class="block w-full object-fit object-top max-h-[320px]" src={post.mainImage.asset.url} alt={post.mainImage.alt}/>
+      </picture>
+      
+      
+
+      <div class="article-text my-4"> 
+        <PortableText portableText={post.body}/>
+      </div>
+    </article>
+    <section>
+      <SuggestedArticles />
+    </section>
+  </main>
+  
 </Layout>
+

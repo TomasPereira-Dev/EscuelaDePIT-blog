@@ -30,5 +30,10 @@ export const schema = defineType({
       title: 'Body',
       type: 'blockContent',
     }),
+    defineField({
+      name: 'image',
+      title: 'Image',
+      type: 'image',
+    })
   ],
 })
