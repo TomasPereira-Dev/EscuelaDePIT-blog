@@ -12,6 +12,11 @@ export const schema = defineType({
       type: 'string',
     }),
     defineField({
+      name: 'description',
+      title: 'description',
+      type: 'string',
+    }),
+    defineField({
       name: 'slug',
       title: 'Slug',
       type: 'slug',
