@@ -23,7 +23,7 @@ const { data: article } = await loadQuery<{title: string; mainImage: {alt: strin
         </picture>
     </a>
     <a href=`/post/${article.slug.current}`><h3 class="text-4xl text-text1 font-bold lg:text-left">{article.title}</h3></a>
-    <div class="flex flex-col items-center gap-4 lg:items-start lg:gap:4">
+    <div class="flex flex-col items-center gap-4 md:items-start md:gap:4">
         <p class="text-text1/75">No se ha proveido ninguna descripción.</p>
         <a href=`/post/${article.slug.current}`  class="px-6 py-2 text-text2 font-semibold bg-lightBlue1 rounded transition-colors hover:bg-text1">LEER MÁS<span class="sr-only">sobre {article.title}</span></a>
     </div>
