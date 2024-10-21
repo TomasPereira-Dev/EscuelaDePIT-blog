@@ -1,6 +1,7 @@
 ---
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import MobileMenu from "../components/MobileMenu.astro";
 import { VisualEditing } from "@sanity/astro/visual-editing";
 
 import "@fontsource/poppins/200.css";
@@ -30,6 +31,17 @@ const visualEditingEnabled = import.meta.env.PUBLIC_SANITY_VISUAL_EDITING_ENABLE
     <Header />
       <slot />
     <Footer />
+    <MobileMenu />
     <VisualEditing enabled={visualEditingEnabled} />
   </body>
+
+  <script>
+    const openBtn = document.querySelector(".open-btn");
+    const menu = document.querySelector(".menu");
+    openBtn.addEventListener("click", () => menu.classList.toggle("hidden"));
+
+	  const closeBtn = document.querySelector(".close-btn");
+    closeBtn.addEventListener("click", () => menu.classList.toggle("hidden"));
+  </script>
+
 </html>
