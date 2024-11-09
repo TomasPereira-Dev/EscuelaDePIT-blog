@@ -17,7 +17,7 @@ const { data: articles } = await loadQuery<{title: string; mainImage: {alt: stri
 const { sectionTitle, classes } = Astro.props;
 ---
 <h2 class=`text-3xl text-text1 text-center mt-16 md:col-span-3 ${classes}`>{sectionTitle}</h2> 
-<ul class="grid grid-flow-row md:grid-cols-3 md:col-span-3 md:gap-6">
+<ul class="grid grid-flow-row gap-4 md:grid-cols-3 md:col-span-3 md:gap-6">
     {articles.map((article) => <li class="space-y-2">
                                     <article>
                                         <a href=`/post/${article.slug.current}`><img class="w-full" src={`${article.mainImage.asset.url}?w=300&h=300&fit=scale`} src={article.mainImage.alt}/></a>                                        
