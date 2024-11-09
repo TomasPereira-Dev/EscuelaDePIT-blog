@@ -82,14 +82,14 @@ const date = new Date(post.publishedAt).toLocaleString("es-AR");
         </div>
       </div>
       <picture>
-        <img class="block w-full object-fit object-top max-h-[320px]" src={post.mainImage.asset.url} alt={post.mainImage.alt}/>
+        <img src={`${post.mainImage.asset.url}?w=1200&h=675&fit=scale`} alt={post.mainImage.alt}/>
       </picture>
       <div class="article-text my-4"> 
         <PortableText portableText={post.body}/>
       </div>
     </article>
     <section>
-      <SuggestedArticles sectionTitle = {"Seguí leyendo"} classes={"mb-4 underline underline-offset-4 decoration-lightBlue1 decoration-4"}/>
+      <SuggestedArticles sectionTitle={"Seguí leyendo"} classes={"mb-4 underline underline-offset-4 decoration-lightBlue1 decoration-4"}/>
     </section>
   </main>
   
